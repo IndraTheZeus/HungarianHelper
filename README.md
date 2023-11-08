@@ -24,7 +24,7 @@ Final Dataset count:
 Train: 131637 Images 
 Test: 32915 Images
 
-Dataset Link: https://drive.google.com/file/d/1zrjxe1Om-K32vI-JMaMlckJVhMOo9n2v/view?usp=sharing
+Dataset Link: Shared on Moodle
 
 
 
