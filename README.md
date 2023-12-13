@@ -33,7 +33,7 @@ Dataset Link: Shared on Moodle
 # Training Code
 All of the Training Code as been provided in the HungarianHelper.ipynb notebook. For running the code you need to provide Training and Test Data in the following format:
 
-'''
+```bash
 Dataset/
 ├── Test/                               // TEST IMAGES
 │ ├── 1/               // Class Label for images  ( 1 to 70 )
@@ -63,7 +63,7 @@ Dataset/
 │ ├── image2.jpg
 │ └── ...
 └── ...
-'''
+```
 
 No Validation Set needs to be provided since the code automatically keeps 20% of the Train set for validation
 
