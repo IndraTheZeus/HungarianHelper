@@ -9,14 +9,21 @@ import random
 import shutil
 folders_list = ['bartosgye_ver1/', 'bartosgye_ver6/', 'challenge2/','icdar2003_chars/','icdar2003_chars_test/']
 test_dir = 'Dataset/Test/'
+val_dir = 'Dataset/Val/'
 train_dir = 'Dataset/Train/'
+val_ratio = 0.25
 test_ratio = 0.2
 
 
 charIndexes = {}
 for i in range(1,71):
     charIndexes[i] = 0
-    
+
+
+valcharIndexes = {}
+for i in range(1,71):
+    valcharIndexes[i] = 0    
+
 
 testcharIndexes = {}
 for i in range(1,71):
@@ -30,9 +37,15 @@ for folder_name in folders_list:
             curr_class = class_name
             image_list = os.listdir(folder_name + class_name)
             random.shuffle(image_list)
-            train_list = image_list[:-round(len(image_list)*test_ratio)]  
-            test_list = image_list[-round(len(image_list)*test_ratio):]
-            print("Train images: ", str(len(train_list)), "Test Images: ", str(len(test_list)))
+            
+            train_list = image_list[:-round(len(image_list)*test_ratio)]
+            
+            val_list = train_list[-round(len(train_list)*val_ratio):]
+            train_list = train_list[:-round(len(train_list)*val_ratio)]
+            
+            test_list = image_list[-round(len(image_list)*test_ratio):]          
+            print("Train images: ", str(len(train_list)), "Val Images: ", str(len(val_list)) , "Test Images: ", str(len(test_list)))
+            
             for image_name in train_list:
                 src = folder_name + class_name + '/' + image_name
                 des = train_dir + class_name + '/' + str(charIndexes[int(class_name)]) + '.png'
@@ -41,6 +54,16 @@ for folder_name in folders_list:
                 if not os.path.exists(train_dir + class_name + '/'): 
                     os.makedirs(train_dir + class_name + '/') 
                 shutil.copy(src, des)
+             
+            for image_name in val_list:
+                src = folder_name + class_name + '/' + image_name
+                des = val_dir + class_name + '/' + str(valcharIndexes[int(class_name)]) + '.png'
+                valcharIndexes[int(class_name)] = valcharIndexes[int(class_name)] + 1
+                print('Copying', src, ' to ', des)
+                if not os.path.exists(val_dir + class_name + '/'): 
+                    os.makedirs(val_dir + class_name + '/') 
+                shutil.copy(src, des)
+                        
             for image_name in test_list:
                 src = folder_name + class_name + '/' + image_name
                 des = test_dir + class_name + '/' + str(testcharIndexes[int(class_name)]) + '.png'
@@ -49,3 +72,6 @@ for folder_name in folders_list:
                 if not os.path.exists(test_dir + class_name + '/'): 
                     os.makedirs(test_dir + class_name + '/') 
                 shutil.copy(src, des)
+           
+
+            
